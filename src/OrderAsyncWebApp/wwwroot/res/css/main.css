@@ -1,0 +1,12 @@
+﻿.table > tbody > tr > td {
+    border: 0px;
+    text-align: center;
+}
+
+.table thead > tr > th {
+    text-align: center;
+}
+.none-alert {
+    text-align: center;
+    border-radius: 0;
+}

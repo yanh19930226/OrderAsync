@@ -1,0 +1,114 @@
+﻿@model PlatformShop
+<section class="main padder">
+    <div class="clearfix">
+        <h4><i class="icon-edit"></i> 添加商店</h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+
+            <section class="panel">
+                <script>
+                        completed = function (xhr) {
+                            if (xhr.responseJSON) {
+                                $.tipsOk("操作成功！");
+                                setTimeout(function () {
+                                    window.location = "@Url.Action("Index","SysShop")";
+                                }, 1500);
+                            } else {
+                                $.tipsError("操作失败,商店已经存在");
+                            }
+                        };
+                </script>
+                <form class="form-horizontal" data-ajax="true" data-ajax-complete="completed" asp-action="DoAdd" asp-controller="SysShop" data-ajax-method="post">
+
+                    <div class="form-group">
+
+                        <label class="col-lg-3 control-label">ShopId</label>
+                        <div class="col-lg-8">
+                            <input asp-for="ShopId" class="bg-focus form-control parsley-validated" style="width:80px" />
+                            <span asp-validation-for="ShopId" class="text-danger"> </span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">商户Id</label>
+                        <div class="col-lg-8">
+                            <input asp-for="MerchantId" class="bg-focus form-control parsley-validated" style="width:80px" />
+                            <span asp-validation-for="MerchantId" class="text-danger"> </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">PPId</label>
+                        <div class="col-lg-8">
+                            <input asp-for="PPId" class="bg-focus form-control parsley-validated" style="width:80px" />
+                            <span asp-validation-for="PPId" class="text-danger"> </span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">标题</label>
+                        <div class="col-lg-8">
+                            <input asp-for="Title" class="bg-focus form-control parsley-validated" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">密钥</label>
+                        <div class="col-lg-8">
+                            <input asp-for="ApiKey" placeholder="Xshopy将API密钥，密码，共享密钥用 : 隔开（API密钥:密码:共享密钥）| 店匠输入Token |shopify和shopbase请以.com结尾" class="bg-focus form-control parsley-validated" />
+                            <span asp-validation-for="ApiKey" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Types" class="col-lg-3 control-label">类型</label>
+                        <div class="col-lg-8">
+                            <select asp-for="Types" class="bg-focus form-control parsley-validated">
+                                @foreach (var enums in Types.Shopify.GetDictionary().Where(obj => obj.Key != -1))
+                                {
+                                    <option value="@enums.Key">@enums.Value</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IsOpen" class="col-lg-3 control-label">是否启用</label>
+                        <div class="col-lg-8">
+                            <select asp-for="IsOpen" class="bg-focus form-control parsley-validated">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">域名</label>
+                        <div class="col-lg-8">
+                            <input asp-for="Domain" class="bg-focus form-control parsley-validated" />
+                            <span asp-validation-for="Domain" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">后台地址</label>
+                        <div class="col-lg-8">
+                            <input asp-for="AdminUrl" class="bg-focus form-control parsley-validated" />
+                            <span asp-validation-for="AdminUrl" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-lg-9 col-offset-3">
+
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+
+                    </div>
+                </form>
+            </section>
+
+        </div>
+    </div>
+
+</section>

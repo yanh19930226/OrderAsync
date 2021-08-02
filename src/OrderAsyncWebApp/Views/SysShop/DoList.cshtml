@@ -1,0 +1,78 @@
+﻿@model List<PlatformShop>
+@{
+
+}
+<div class="pull-out m-t-small">
+    <table class="table table-striped b-t text-small">
+        <thead>
+            <tr>
+                <th class="th-sortable" data-toggle="class">
+                    商店
+                </th>
+                <th>商户</th>
+                <th>PPId</th>
+                @*<th>ApiKey</th>*@
+                <th>标题</th>
+                <th>类型</th>
+                <th>启用</th>
+                <th>域名</th>
+                <th>后台地址</th>
+                <th width="260">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var info in Model)
+            {
+            <tr>
+                <td>@info.ShopId</td>
+                <td>@info.MerchantId</td>
+                <td>@info.PPId</td>
+                @*<td>@info.ApiKey</td>*@
+                <td>@info.Title</td>
+
+                @if (info.Types == 1)
+                {
+                    <td>Shopify</td>
+                }
+                else if (info.Types == 2)
+                {
+                    <td>XShoppy</td>
+                }
+                else if (info.Types == 3)
+                {
+                    <td>Shopbase</td>
+                }
+                else if (info.Types == 4)
+                {
+                    <td>Shoplaza</td>
+                }
+                else if (info.Types == 5)
+                {
+                    <td>自建站</td>
+                }
+                else if (info.Types == 6)
+                {
+                    <td>FunPingPing</td>
+                }
+                else if (info.Types == 7)
+                {
+                    <td>FunPingPing</td>
+                }
+                @if (info.IsOpen == 1)
+                {
+                    <td>启用</td>
+                }
+                else
+                {
+                    <td>禁用</td>
+                }
+                <td>@info.Domain</td>
+                <td>@info.AdminUrl</td>
+                <td>
+                    <a href="/SysShop/Edit?ShopId=@info.ShopId" class="btn btn-success btn-mini">修改</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

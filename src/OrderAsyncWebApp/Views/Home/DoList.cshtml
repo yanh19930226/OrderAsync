@@ -1,0 +1,71 @@
+﻿
+@model List<PlatformOrder>
+<span>数量:@ViewBag.Count</span>
+<div class="pull-out m-t-small">
+    @if (Model.Count > 0)
+    {
+        <table class="table  b-t text-small table-striped">
+            <thead>
+                <tr>
+                    <th>店铺</th>
+                    <th>订单时间</th>
+                    <th>付款时间</th>
+                    <th>商户</th>
+                    <th>PPId</th>
+                    <th>平台订单号</th>
+                    <th>邮箱</th>
+                    <th>电话</th>
+                    <th>货币</th>
+                    <th>国家</th>
+                    <th>州</th>
+                    <th>市</th>
+                    <th>Gateway</th>
+                    <th>交易号</th>
+                    <th>总金额</th>
+                    <th>Address1</th>
+                    <th>Address2</th>
+                    <th>Zip</th>
+                    <th>物流名称</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.ShopId</td>
+                    <td>@item.Created_at.AddHours(8).ToString("yyyy-MM-dd HH:mm:sss")</td>
+                    <td>@item.Updated_at.AddHours(8).ToString("yyyy-MM-dd HH:mm:sss")</td>
+                    <td>@item.MerchantId</td>
+                    <td>@item.PPId</td>
+                    <td>@item.ExternalName</td>
+                    <td>@item.Email</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Currency</td>
+                    <td>@item.Country</td>
+                    <td>@item.State</td>
+                    <td>@item.City</td>
+                    <td>@item.Gateway</td>
+                    <td>@item.CheckoutId</td>
+                    <td>@item.TotalPrice</td>
+                    <td>@item.Address1</td>
+                    <td>@item.Address2</td>
+                    <td>@item.Zip</td>
+                    <td>@item.ShopifLogisticsName</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning alert-block none-alert">
+            <h4><i class="icon-bell-alt"></i>暂无数据!</h4>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+
+</script>
+
+

@@ -1,0 +1,136 @@
+﻿@{
+   
+
+}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>后台内容管理系统</title>
+
+    <meta name="description" content="mobile first, app, web app, responsive, admin dashboard, flat, flat ui">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <link rel="stylesheet" href="/res/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/res/css/font-awesome.min.css">
+
+    @*<script src="/Home/Resources"></script>*@
+    <link rel="stylesheet" href="/res/css/style.css">
+
+    <link rel="stylesheet" href="/res/css/plugin.css">
+
+    <link rel="stylesheet" href="/res/sco/scojs.css">
+    <link href="/res/css/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/res/css/landing.css">
+    <script src="/res/js/jquery.js"></script>
+    <!-- datetimepicker -->
+    <script src="~/lib/datetimepicker/bootstrap-datetimepicker.js"></script>
+    <link href="~/lib/datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <script src="~/lib/datepicker/bootstrap-datepicker.js"></script>
+    <link href="~/lib/datepicker/datepicker3.css" rel="stylesheet" />
+    <!-- imageupload -->
+    <link href="~/lib/imageupload/1.0/css/imgup.css" rel="stylesheet" />
+    <script src="~/lib/imageupload/1.0/js/imgup.js?1=1"></script>
+    <script src="~/lib/imageupload/1.0/js/preview.js"></script>
+    <!-- fileinput -->
+    <link href="~/lib/fileinput/css/fileinput.css" rel="stylesheet" />
+    <script src="~/lib/fileinput/js/fileinput.js"></script>
+    <script src="~/lib/fileinput/js/locales/zh.js"></script>
+    <link href="/res/css/nstyle.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <header id="header" class="navbar">
+
+        <a class="navbar-brand" href="/">Order</a>
+
+        <button type="button" class="btn btn-link pull-left nav-toggle hidden-lg" data-toggle="class:slide-nav slide-nav-left" data-target="body">
+
+            <i class="icon-reorder icon-xlarge text-default"></i>
+
+        </button>
+
+
+        <form class="navbar-form pull-left shift" action="" data-toggle="shift:appendTo" data-target=".nav-primary">
+
+
+        </form>
+
+    </header>
+
+    <nav id="nav" class="nav-primary visible-lg nav-vertical">
+        <ul class="nav" data-spy="affix" data-offset-top="50">
+            <li class="dropdown-submenu">
+                <a resmenu href="#"><i class="icon-list icon-xlarge"></i>选项</a>
+                <ul class="dropdown-menu">
+                    <li><a href="@Url.Content("~/SysShop")">店铺</a></li>
+                    <li><a href="@Url.Content("~/Home/Order")">订单</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <section id="content">
+        @RenderBody()
+    </section>
+
+
+    <!-- footer -->
+
+    <footer id="footer">
+
+        <div class="text-center padder clearfix">
+
+        </div>
+
+    </footer>
+
+    <a href="#" class="hide slide-nav-block" data-toggle="class:slide-nav slide-nav-left" data-target="body"></a>
+
+
+    <!-- / footer -->
+    <!-- Bootstrap -->
+
+    <script src="/res/js/bootstrap.js"></script>
+
+    <!-- app -->
+
+    <script src="/res/js/app.js"></script>
+
+    <script src="~/res/sco/sco.confirm.js?1=1" charset="GB2312"></script>
+    <script src="~/res/sco/sco.message.js" charset="GB2312"></script>
+    <script src="~/res/sco/sco.modal.js" charset="GB2312"></script>
+
+
+    <script src="~/lib/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/res/js/box.js"></script>
+    <script src="/res/js/MainScript.js?1=1"></script>
+    <script src="~/res/js/initForm.js"></script>
+    @RenderSection("Scripts", required: false)
+    <script>
+        $(function () {
+            $(".datepicker").each(function () {
+
+                $(this).datepicker({
+                    language: 'zh-CN', //语言
+                    autoclose: true, //选择后自动关闭
+                    clearBtn: true,//清除按钮
+                    format: "yyyy-mm-dd"//日期格式
+                });
+            });
+        })
+    </script>
+</body>
+
+</html>

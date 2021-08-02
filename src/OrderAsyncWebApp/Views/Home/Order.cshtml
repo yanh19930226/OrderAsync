@@ -1,0 +1,57 @@
+﻿@model SearchModel
+
+<section class="main padder">
+    <div class="clearfix">
+        <h4><i class="icon-edit"></i> 订单列表</h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <div class="row text-small">
+                    <form data-ajax="true" data-ajax-update="#divlist" data-ajax-mode="replace" asp-action="DoList" id="newform" asp-controller="Home" data-ajax-method="post" style="margin-bottom:0">
+                        <div class="col-lg-8 m-b-mini">
+                            <label class=""> 店铺：</label>
+                            <select asp-for="ShopId" class="input-small inline form-control" style="width:130px">
+                                <option value="">全部</option>
+                                @foreach (var shop in ViewBag.Shop as IList<PlatformShop>)
+                                {
+                                    <option value="@shop.ShopId">@shop.ShopId</option>
+                                }
+                            </select>
+                            <label class="">时间：</label>
+                            <input type="text" id="StartTime" name="StartTime" value="@Model.StartTime" class="input-small inline form-control datepicker" autocomplete="off" data-date-format="yyyy-mm-dd" style="width:130px" placeholder="查询开始时间">
+                            <label class=""> -</label>
+                            <input type="text" id="EndTime" name="EndTime" value="@Model.EndTime" class="input-small inline form-control datepicker" autocomplete="off" data-date-format="yyyy-mm-dd" style="width:130px" placeholder="查询结束时间">
+
+                            <input type="text" name="MerchantId" id="MerchantId" class="input-small inline form-control" style="width:330px" placeholder="商户Id">
+
+                            <input type="text" name="PPId" id="PPId" class="input-small inline form-control" style="width:330px" placeholder="PPId">
+                            <button type="submit" class="btn btn-small  btn-inverse">
+                                查询
+                            </button>
+                            <button type="button" onclick="DoExport()" class="btn btn-small  btn-inverse">
+                                导出
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+                <div id="divlist">
+                    @Html.Action("DoList", Model)
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+
+    <script>
+        var DoExport = function () {
+            window.location.href = "@Url.Action("DoExport", "Home")?StartTime=" + $("#StartTime").val() + "&EndTime=" + $("#EndTime").val() + "&ShopId=" + $("#ShopId").val()
+        };
+    </script>
+}
+
+
+
