@@ -33,8 +33,7 @@ namespace OrderAsyncWebApp
             var client = new MongoClient("mongodb://127.0.0.1:27017");
             var database = client.GetDatabase("PlatformOrder");
             var _collection = database.GetCollection<PlatformOrder>("PlatformOrder");
-            var aa = request.OrderList.Where(p => p.email == "Suzannebailey420@yahoo.com").FirstOrDefault();
-            foreach (var info in request.OrderList.Where(p=>p.email== "Suzannebailey420@yahoo.com"))
+            foreach (var info in request.OrderList)
             {
                 var filter = Builders<PlatformOrder>.Filter;
                 var options = new FindOneAndUpdateOptions<PlatformOrder, PlatformOrder>() { IsUpsert = true };
@@ -46,7 +45,7 @@ namespace OrderAsyncWebApp
                                 Set(p => p.Address1, info.shipping_address.address1).
                                 Set(p => p.Address2, info.shipping_address.address2 ?? "").
                                 Set(p => p.CartToken, info.cart_token ?? "").
-                                Set(p => p.CheckoutId, info.checkout_id ?? "").
+                                Set(p => p.CheckoutId,  info?.payment_line?.transaction_no?? info.checkout_id ?? "").
                                 Set(p => p.City, info.shipping_address.city).
                                 Set(p => p.ClientDetails, Newtonsoft.Json.JsonConvert.SerializeObject(info.client_details)).
                                 Set(p => p.Country, info.shipping_address.country_code).

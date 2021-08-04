@@ -159,7 +159,7 @@ namespace OrderSync.Task
                     zip = info.shipping.zip,
                     province_code = info.shipping.province_code
                 };
-                order.checkout_id = info.checkout_id;
+                order.checkout_id = info.transaction_id;
                 order.shipping_lines = new List<shippinglines>() { new shippinglines() {
                  title=info.shipping_method,
                   id=info.shipping_method
