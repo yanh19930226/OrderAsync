@@ -33,7 +33,9 @@ namespace OrderSync.Shop
                 //店铺读取订单
                 for (; ; )
                 {
-                    var list = ToOrder( GetList(shop.ShopId, shop.Domain,DateTime.Now.AddDays(-30), endtime, shop.ApiKey, page++), shop);
+                    var syncTime = TimeMin(shop.StartSyncTime);
+
+                    var list = ToOrder( GetList(shop.ShopId, shop.Domain, syncTime, endtime, shop.ApiKey, page++), shop);
                     foreach (var info in list)
                     {
                         if (info.id == "3942"|| info.id == "3942")

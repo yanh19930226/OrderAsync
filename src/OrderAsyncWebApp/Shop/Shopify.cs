@@ -1,4 +1,5 @@
 ﻿using OrderAsyncWebApp.Models;
+using OrderAsyncWebApp.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,8 +20,10 @@ namespace OrderSync.Task
                 //店铺读取订单
                 for (; ; )
                 {
+                    var syncTime = TimeMin(shop.StartSyncTime).ToString("s") + "+08:00";
+
                     System.Threading.Thread.Sleep(2000);
-                    var list = new Shopify().GetList(shop.ShopId, shop.ApiKey, DateTime.Now.AddDays(-30).ToString("s") + "+08:00", time, "");
+                    var list = new Shopify().GetList(shop.ShopId, shop.ApiKey, syncTime, time, "");
                     foreach (var info in list)
                     {
                         orderDic.Add(info.id, info);
@@ -38,6 +41,8 @@ namespace OrderSync.Task
                         time = list[list.Count - 1].created_at;
                     }
                 }
+                ShopService shopService = new ShopService();
+                shopService.DeleteErrorMsg(shop.ShopId);
                 return orderDic.Values.ToList();
             }
             catch (Exception ex)
@@ -77,7 +82,18 @@ namespace OrderSync.Task
             }
             catch (WebException ex)
             {
-                Console.WriteLine($"{shopId}请求地址:{req};错误信息:店铺" + ex.Message);
+
+                ShopService shopService = new ShopService();
+                var msg = $"{shopId}请求地址:{req};错误信息:店铺" + ex.Message;
+                ErrorMsg errorMsg = new ErrorMsg()
+                {
+                    ShopId = shopId,
+                    Msg = msg
+                };
+                shopService.AddErrorMsg(errorMsg);
+                Console.WriteLine(msg);
+
+
                 response = (HttpWebResponse)ex.Response;
                 using (StreamReader reader = new StreamReader(response.GetResponseStream(), encoding))
                 {

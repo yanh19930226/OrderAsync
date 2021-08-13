@@ -19,14 +19,7 @@
                 <div class="row text-small">
                     <form data-ajax="true" data-ajax-update="#divlist" data-ajax-mode="replace" asp-action="DoList" id="newform" asp-controller="SysShop" data-ajax-method="post">
                         <div class="col-lg-12 m-b-mini">
-                            @*<label class=""> 启用：</label>
-        <select name="IsOpen" id="IsOpen" class="input-small inline form-control" style="width:90px">
-            <option selected value="0">全部</option>
-            <option value="1">启用</option>
-            <option value="2"></option>
-        </select>*@
-
-                            <input type="text" name="ShopId" id="ShopId" class="input-small inline form-control" style="width:330px" placeholder="店铺Id">
+                            <input type="text" name="ShopId" id="ShopId" class="input-small inline form-control" style="width:330px" placeholder="店铺Id/域名">
                             <button type="submit" class="btn btn-small  btn-inverse">
                                 查询
                             </button>

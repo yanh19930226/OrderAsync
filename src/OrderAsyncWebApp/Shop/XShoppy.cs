@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using OrderAsyncWebApp.Models;
+using OrderAsyncWebApp.Services;
 
 namespace OrderSync.Task
 {
@@ -23,10 +24,8 @@ namespace OrderSync.Task
                 for (var page = 1; ; page++)
                 {
                     System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
-                    var syncTime =DateTime.Now.AddDays(-30);
 
-                    
-                    syncTime = TimeMin(syncTime,shop.ShopId);
+                    var syncTime = TimeMin(shop.StartSyncTime);
                     
                     long timeStamp = (long)(syncTime - startTime).TotalSeconds;
 
@@ -40,6 +39,8 @@ namespace OrderSync.Task
                         break;
                     }
                 }
+                ShopService shopService = new ShopService();
+                shopService.DeleteErrorMsg(shop.ShopId);
                 return orderDic.Values.ToList();
             }
             catch (Exception ex)
@@ -78,6 +79,16 @@ namespace OrderSync.Task
             }
             catch (WebException ex)
             {
+
+                ShopService shopService = new ShopService();
+                var msg = $"{domain};错误信息:店铺" + ex.Message;
+                ErrorMsg errorMsg = new ErrorMsg()
+                {
+                    ShopId = domain,
+                    Msg = msg
+                };
+                shopService.AddErrorMsg(errorMsg);
+                Console.WriteLine(msg);
                 response = (HttpWebResponse)ex.Response;
                
                 using (StreamReader reader = new StreamReader(response.GetResponseStream(), encoding))

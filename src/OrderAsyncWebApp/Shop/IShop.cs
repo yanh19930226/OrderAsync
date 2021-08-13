@@ -89,5 +89,15 @@ namespace OrderSync.Task
                  return dt;
           
         }
+
+        public DateTime TimeMin(DateTime dt)
+        {
+            if (Convert.ToDateTime(dt) < Convert.ToDateTime("2020-12-01 00:00:01"))
+            {
+                return DateTime.Now.AddDays(-30);
+            }
+            return dt;
+
+        }
     }
 }

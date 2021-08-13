@@ -41,7 +41,7 @@ namespace OrderAsyncWebApp
                         .AddSingleton<IJobFactory, SingletonJobFactory>()
                         .AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             services.AddSingleton(new JobSchedule(typeof(TestJob), (SimpleScheduleBuilder x) => x.WithIntervalInSeconds(1).RepeatForever(), null, true));
-            services.AddHostedService<QuartzHostedService>();
+            //services.AddHostedService<QuartzHostedService>();
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -25,7 +25,9 @@ namespace OrderSync.Shop
                 //店铺读取订单
 
                 System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
-                var syncTime = DateTime.Now.AddDays(-30);
+
+
+                var syncTime = TimeMin(shop.StartSyncTime);
                 DateTime dt = DateTime.Now;
 
                 syncTime = TimeMin(syncTime, shop.ShopId);

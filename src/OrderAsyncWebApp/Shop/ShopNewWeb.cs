@@ -1,4 +1,5 @@
 ﻿using OrderAsyncWebApp.Models;
+using OrderAsyncWebApp.Services;
 using OrderSync.Task;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,9 @@ namespace OrderSync.Shop
                 var oldid = "";
                 for(var p = 1; ;p++ )
                 {
-                    var list = new ShopNewWeb().GetList(shop.ShopId, shop.Domain, DateTime.Now, shop.ApiKey,p);
+                    var syncTime = TimeMin(shop.StartSyncTime);
+
+                    var list = new ShopNewWeb().GetList(shop.ShopId, shop.Domain, shop.StartSyncTime, shop.ApiKey,p);
                     foreach (var info in list)
                     {
                         orderDic.Add(info.id, info);
@@ -34,10 +37,10 @@ namespace OrderSync.Shop
                         break;
                     }
                     oldid = list[list.Count-1].id;
-
                 }
-               
 
+                ShopService shopService = new ShopService();
+                shopService.DeleteErrorMsg(shop.ShopId);
                 return orderDic.Values.ToList();
             }
             catch (Exception ex)
@@ -53,7 +56,7 @@ namespace OrderSync.Shop
             Encoding encoding = Encoding.UTF8;
 
             var created_at_max = "&endAddTime=" + DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
-             created_at_min = TimeMin(Convert.ToDateTime(created_at_min), shopId).AddDays(-30);
+             //created_at_min = TimeMin(Convert.ToDateTime(created_at_min), shopId).AddDays(-30);
 
             var reqUrl = "https://" + url + "/api/OrderListApi?startAddTime=" + created_at_min + created_at_max + "&KEY=" + key + "&pageindex=" + p;
 
@@ -71,7 +74,15 @@ namespace OrderSync.Shop
             }
             catch (WebException ex)
             {
-                Console.WriteLine($"{shopId}请求地址:{reqUrl};错误信息:店铺"+ex.Message);
+                ShopService shopService = new ShopService();
+                var msg = $"{shopId}请求地址:{reqUrl};错误信息:店铺" + ex.Message;
+                ErrorMsg errorMsg = new ErrorMsg()
+                {
+                    ShopId=shopId,
+                    Msg=msg
+                };
+                shopService.AddErrorMsg(errorMsg);
+                Console.WriteLine(msg);
                 response = (HttpWebResponse)ex.Response;
                 if (response.StatusCode == HttpStatusCode.Found) // 判斷是否為 302
                 {

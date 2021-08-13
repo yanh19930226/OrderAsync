@@ -1,4 +1,5 @@
 ﻿using OrderAsyncWebApp.Models;
+using OrderAsyncWebApp.Services;
 using OrderSync.Task;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,10 @@ namespace OrderSync.Task
                 //店铺读取订单
                 for (; ; )
                 {
-                    var list = new Shopbase().GetList(shop.ShopId, shop.ApiKey, DateTime.Now.AddDays(-30).ToString("s") + "+08:00", DateTime.Now.ToString("s") + "+08:00", page++);
+                    var syncTime = TimeMin(shop.StartSyncTime).ToString("s") + "+08:00";
+
+
+                    var list = new Shopbase().GetList(shop.ShopId, shop.ApiKey, syncTime, DateTime.Now.ToString("s") + "+08:00", page++);
                     foreach (var info in list)
                     {
                         //info.total_price_usd = info.total_price / Program.RatesDic[info.currency];
@@ -35,6 +39,9 @@ namespace OrderSync.Task
                         break;
                     }
                 }
+                ShopService shopService = new ShopService();
+                shopService.DeleteErrorMsg(shop.ShopId);
+
                 return orderDic.Values.ToList();
             }
             catch (Exception ex)
@@ -76,6 +83,15 @@ namespace OrderSync.Task
             }
             catch (WebException ex)
             {
+                ShopService shopService = new ShopService();
+                var msg = $"{shopId};错误信息:店铺" + ex.Message;
+                ErrorMsg errorMsg = new ErrorMsg()
+                {
+                    ShopId = shopId,
+                    Msg = msg
+                };
+                shopService.AddErrorMsg(errorMsg);
+                Console.WriteLine(msg);
                 response = (HttpWebResponse)ex.Response;
                 using (StreamReader reader = new StreamReader(response.GetResponseStream(), encoding))
                 {
@@ -101,6 +117,17 @@ namespace OrderSync.Task
             }
             catch(Exception ex)
             {
+                ShopService shopService = new ShopService();
+                var msg = $"{shopId};错误信息:店铺" + ex.Message;
+                ErrorMsg errorMsg = new ErrorMsg()
+                {
+                    ShopId = shopId,
+                    Msg = msg
+                };
+                shopService.AddErrorMsg(errorMsg);
+                Console.WriteLine(msg);
+
+
                 Console.WriteLine("下载订单失败");
                 System.Console.WriteLine("responseText:" + responseText);
             }

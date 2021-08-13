@@ -1,0 +1,26 @@
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace OrderAsyncWebApp.Models
+{
+
+  
+    public class ErrorMsg
+    {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
+        /// <summary>
+        /// ShopId
+        /// </summary>
+        public String ShopId { get; set; } = "";
+        /// <summary>
+        /// Msg
+        /// </summary>
+        public String Msg { get; set; } = "";
+    }
+}

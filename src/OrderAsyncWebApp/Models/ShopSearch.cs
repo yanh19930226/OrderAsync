@@ -7,7 +7,6 @@ namespace OrderAsyncWebApp.Models
 {
     public class ShopSearch
     {
-
         public string ShopId { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace OrderAsyncWebApp.Services
             {
                 filter = filter & Builders<PlatformOrder>.Filter.Eq(p => p.PPId, searchModel.PPId);
             }
+
             if (string.IsNullOrEmpty(searchModel.StartTime) == false)
             {
                 var StartTime = Convert.ToDateTime(searchModel.StartTime).Date;

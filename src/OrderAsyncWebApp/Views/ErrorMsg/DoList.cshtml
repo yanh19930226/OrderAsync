@@ -1,0 +1,25 @@
+﻿@model List<ErrorMsg>
+@{
+
+}
+<div class="pull-out m-t-small">
+    <table class="table table-striped b-t text-small">
+        <thead>
+            <tr>
+                <th class="th-sortable" data-toggle="class">
+                    店铺
+                </th>
+                <th>错误信息</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var info in Model)
+            {
+                <tr>
+                    <td>@info.ShopId</td>
+                    <td>@info.Msg</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
